@@ -63,12 +63,13 @@ public class ScheduleRestController {
 		setFound(false);
 		List<Range> ranges = repository.findAllByTokenid(tokenId);
 		ranges.stream().forEach((range) -> {
-			if (LocalTime.now().isAfter(range.getFromTime()) && LocalTime.now().isAfter(range.getToTime())) {
+			if (LocalTime.now().isAfter(range.getFromTime()) && LocalTime.now().isBefore(range.getToTime())) {
+				System.out.println(LocalTime.now().toString() + range);
 				setFound(true);
 			}
 		});
 		if (found) {
-			return new ResponseEntity(HttpStatus.FOUND);
+			return new ResponseEntity(HttpStatus.OK);
 		} else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}

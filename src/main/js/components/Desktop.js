@@ -2,6 +2,8 @@ import RangeList from "./RangeList"
 import InputTable from "./InputTable"
 import React, { useContext, useEffect } from 'react';
 import { store, READ_ALL_RANGES } from "../StateProvider"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Desktop = (props) => {
     const context = useContext(store);
     const callReadAll = async(tokenId) => {
@@ -29,6 +31,7 @@ const Desktop = (props) => {
         <div class="container">
         <InputTable tokenId={context.state.tokenId}/>
         <RangeList items={context.state.ranges} /> 
+        <ToastContainer autoClose={1000}  position={toast.POSITION.BOTTOM_LEFT}/>
         </div>
         ); 
     }

@@ -11,7 +11,7 @@ const StateProvider = ( { children } ) => {
   const [state, dispatch] = useReducer((state, action) => {
     switch(action.type) {
       case READ_ALL_RANGES:
-      const newStateReadAll = {...state, tokenId: action.tokenId, ranges: action.ranges};
+      const newStateReadAll = {...state, tokenId: action.tokenId, from: action.from, to: action.to, ranges: action.ranges};
       return newStateReadAll;
       default:
       throw new Error();
