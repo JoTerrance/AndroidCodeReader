@@ -22,7 +22,8 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @RestController
-@CrossOrigin(origins = { "http://localhost", "http://localhost:3000", "http://127.0.0.1", "http://127.0.0.1:3000" })
+@CrossOrigin(origins = { "*", "http://localhost", "http://localhost:3000", "http://127.0.0.1",
+		"http://127.0.0.1:3000" })
 @RequestMapping(value = "/api")
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ScheduleRestController {
@@ -61,6 +62,7 @@ public class ScheduleRestController {
 	@RequestMapping(value = "/isTimeValid")
 	public ResponseEntity isValid(@RequestParam String tokenId) {
 		setFound(false);
+		System.out.println("call is valid");
 		List<Range> ranges = repository.findAllByTokenid(tokenId);
 		ranges.stream().forEach((range) -> {
 			if (LocalTime.now().isAfter(range.getFromTime()) && LocalTime.now().isBefore(range.getToTime())) {
