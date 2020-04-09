@@ -1,54 +1,43 @@
 
 import React, { useState, useEffect }from 'react';
 import { Button, Text, View, StyleSheet, TextInput, ToastAndroid, Modal } from 'react-native';
-const ModalInfo = ({visible, ipInput, onCloseModal}) => {
-//  let [modalVisible, setModalVisible] = useState(visible);
-  let [ip, setIp] = useState(ipInput);
-  //setModalVisible(visible);
+const ModalInfo = ({visible, ipEdit, onCloseModal}) => {
+  let [ip, setIp] = useState(ipEdit);
   return(
-        <View  style={styles.container}>
-        <Modal isVisible={visible} transparent={true}  animationType="slide"  
-        onRequestClose={onCloseModal(ip)}>
-          <View style={styles.content} >
-                <Text>Actual Ip: {ip}</Text>
-                <TextInput onChangeText={text => setIp(text)} value={ip} />
+        <Modal  visible={visible} transparent={true}  animationType="slide">
+          <View  style={styles.content}>
+                <Text style={styles.block}>Actual Ip: {ip}</Text>
+                <TextInput style={styles.text} onChangeText={text => 
+                    setIp(text) } value={ip} />
               <View style={styles.buttonRow}>
-                <Button title="Close" onPress={onCloseModal(ip)} color="#ff0000" />
+                <Button style={styles.closeButton} title="Close" onPress={ () =>onCloseModal(ip) } />
               </View>
             </View>
         </Modal>
-</View>
         );
           }
 
           const styles = StyleSheet.create({
-            container: {
-              flex: 1,
-              alignItems: "flex-end",
-              flexDirection: "column"
-            },
             content: {
-              padding: 20,
-              paddingBottom: 30,
+              marginTop: 500,
+              paddingBottom: 0,
               flex: 1,
-              backgroundColor: "#ffffff",
+              backgroundColor: 'rgba(255,255,255,1)',
               shadowOffset: { width: 0, height: -3 },
               shadowColor: "black",
               shadowOpacity: 0.2,
               shadowRadius: 5,
-              elevation: 30
-              // width: 200
+              elevation: 30,
+              bottom:1
             },
             text: {
               borderBottomWidth: 1,
               padding: 5
             },
-            closeIcon: {
-              color: "#fff"
-            },
             buttonRow: {
               flexDirection: "row",
               justifyContent: "space-around",
+              marginTop: 30,
               paddingBottom: 20
             },
             block: {

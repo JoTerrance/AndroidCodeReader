@@ -62,11 +62,9 @@ public class ScheduleRestController {
 	@RequestMapping(value = "/isTimeValid")
 	public ResponseEntity isValid(@RequestParam String tokenId) {
 		setFound(false);
-		System.out.println("call is valid");
 		List<Range> ranges = repository.findAllByTokenid(tokenId);
 		ranges.stream().forEach((range) -> {
 			if (LocalTime.now().isAfter(range.getFromTime()) && LocalTime.now().isBefore(range.getToTime())) {
-				System.out.println(LocalTime.now().toString() + range);
 				setFound(true);
 			}
 		});

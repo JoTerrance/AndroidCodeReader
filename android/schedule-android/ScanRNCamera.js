@@ -5,6 +5,7 @@ import ModalInfo from './ModalInfo';
 const ScanRNCamera = (props) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [ip, onChangeIp] = useState('192.168.0.18:3001')
   useEffect(() => {
     (async () => {
@@ -25,6 +26,7 @@ const ScanRNCamera = (props) => {
     })
   };
   const onCloseModal = (ip) => {
+    setModalVisible(false);
     onChangeIp(ip);
   };
   if (hasPermission === null) {
@@ -35,25 +37,13 @@ const ScanRNCamera = (props) => {
   }
       return (
         <>
-        <View style={{flex: 1, flexDirection: 'column'}}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
         <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
         />
         </View>
-        {/* <RNCamera
-          defaultTouchToFocus
-          mirrorImage={false}
-          onBarCodeRead={this.onBarCodeRead.bind(this)}
-          onFocusChanged={() => {}}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          type={state.camera.type}
-        />  */}
+    
         <View style={[styles.overlay, styles.topOverlay]}>
           <Text style={styles.scanScreenMessage}>Please scan the barcode.</Text>
         </View>
@@ -64,18 +54,17 @@ const ScanRNCamera = (props) => {
           title={'Tap to Scan Again'}
           />}
           {!scanned && <Button
-            onPress={() => { setModalVisible(false); }}
+            onPress={() => { 
+              setModalVisible(true); 
+            }}
             style={styles.enterBarcodeManualButton}
             title="Edit url" /> }
         </View>
         
-        <ModalInfo visible={false} ip={ip} onCloseModal={onCloseModal}/> 
-        
+        <ModalInfo visible={modalVisible} ipEdit={ip} onCloseModal={onCloseModal}/>    
         </>
           );
-        }
-        
-        
+        }   
         const styles = {
           container: {
             flex: 1
@@ -114,3 +103,16 @@ const ScanRNCamera = (props) => {
         };
         
         export default ScanRNCamera;
+            {/* <RNCamera
+          defaultTouchToFocus
+          mirrorImage={false}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
+          onFocusChanged={() => {}}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
+          type={state.camera.type}
+        />  */}
